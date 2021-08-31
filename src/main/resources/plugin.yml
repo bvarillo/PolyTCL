@@ -1,0 +1,11 @@
+name: PolyTCL
+main: fr.polygones.polytcl.Main
+author: polygones
+version: 1.0
+dependencies:
+api-version: 1.17
+commands:
+  helloPoly:
+    description: Say hello to polygones
+    usage: /helloPoly
+    permission: testspigot.use
