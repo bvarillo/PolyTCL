@@ -25,19 +25,23 @@ public class Main extends JavaPlugin
 
     @Override
     public void onEnable(){
-        this.getCommand("helloPoly").setExecutor(new CommandHelloPoly());
-
-        config.addDefault("mapPath","");
+        
+        config.addDefault("mapPath","plugins/PolyTCL/map.csv");
+        config.addDefault("separator", ",");
         config.options().copyDefaults(true);
         saveConfig();
+
         getLogger().info("mapPath : "+config.getString("mapPath"));
+        getLogger().info("separator : "+config.getString("separator"));
+
         try {
-            Integer[][] map = CsvParser.parseIntergerMatrix(config.getString("mapPath"), "\t");
-            System.out.println(map[0][0]);
+            Integer[][] map = CsvParser.parseIntergerMatrix(config.getString("mapPath"), config.getString("separator"));
+            getLogger().info(Arrays.deepToString(map));
         } catch (IOException e){
-            getLogger().severe("Pb reading file");
+            getLogger().severe("Pb reading map");
         }
-        getLogger().info("fr.polygones.testspigot loaded");
+
+        this.getCommand("helloPoly").setExecutor(new CommandHelloPoly());
     }
 
     @Override

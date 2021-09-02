@@ -9,7 +9,7 @@ Minecraft pluggin that compute path in a railway network.
 ```yml
  mapPath: #the path to the csv file describing the network, default : ./plugins/PolyTCL/map.csv
  separator: #the separator used in the csv file, default : ,
- ```
+```
 
 ## Devloppement
 
