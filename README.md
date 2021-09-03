@@ -1,13 +1,13 @@
 # PolyTCL
 
-Minecraft pluggin that compute path in a railway network.
+Minecraft plugin that compute path in a railway network.
 
 ## Configuration
 
 ./plugins/PolyTCL/config.yml
 
 ```yml
- mapPath: #the path to the csv file describing the network, default : ./plugins/PolyTCL/map.csv
+ mapName: #Name of the csv file describing the network, default : map.csv
  separator: #the separator used in the csv file, default : ,
 ```
 

@@ -12,13 +12,12 @@ import javax.print.event.PrintEvent;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.polygones.polytcl.command.CommandHelloPoly;
+import fr.polygones.polytcl.commands.CommandHelloPoly;
+import fr.polygones.polytcl.commands.CommandPath;
 import fr.polygones.polytcl.utils.CsvParser;
 
-/**
- * Hello world!
- *
- */
+
+
 public class Main extends JavaPlugin
 {
     private FileConfiguration config = getConfig();
@@ -26,26 +25,38 @@ public class Main extends JavaPlugin
     @Override
     public void onEnable(){
         
-        config.addDefault("mapPath","plugins/PolyTCL/map.csv");
+        config.addDefault("mapFile","map.csv");
         config.addDefault("separator", ",");
         config.options().copyDefaults(true);
         saveConfig();
 
-        getLogger().info("mapPath : "+config.getString("mapPath"));
-        getLogger().info("separator : "+config.getString("separator"));
 
+        getCommand("helloPoly").setExecutor(new CommandHelloPoly());
+
+
+        getLogger().fine("mapFile : "+config.getString("mapFile"));
+        getLogger().fine("separator : "+config.getString("separator"));
+
+        Integer[][] map = null;
+        String mapPath = getDataFolder().toPath() + File.separator + config.getString("mapFile");
         try {
-            Integer[][] map = CsvParser.parseIntergerMatrix(config.getString("mapPath"), config.getString("separator"));
-            getLogger().info(Arrays.deepToString(map));
+            map = CsvParser.parseIntergerMatrix(mapPath, config.getString("separator"));
+            getLogger().fine(Arrays.deepToString(map));
         } catch (IOException e){
-            getLogger().severe("Pb reading map");
+            getLogger().severe("Pb reading map in file : " + mapPath);
+        }
+        if(map.length != map[0].length){
+            getLogger().severe("The given map is not a valid (square) map !\nThe path command will not be enabled.");
+        } else {
+            getLogger().info("Map loaded with " + map.length + " stations");
+            getCommand("path").setExecutor(new CommandPath(map));
         }
 
-        this.getCommand("helloPoly").setExecutor(new CommandHelloPoly());
+        
     }
 
     @Override
     public void onDisable(){
-        System.out.println("Goodbye from polygones.testspigot");
+        System.out.println("Goodbye from fr.polygones.polytcl");
     }
 }
