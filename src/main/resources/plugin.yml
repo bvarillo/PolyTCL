@@ -8,4 +8,8 @@ commands:
   helloPoly:
     description: Say hello to polygones
     usage: /helloPoly
-    permission: testspigot.use
+    permission: polytcl.use
+  path:
+    description: Give the path between two station
+    usage: /trajet x y    x is the number of the departure station, y the number of the arrival station
+    permission: polytcl.use
