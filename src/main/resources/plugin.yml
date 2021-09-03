@@ -13,3 +13,7 @@ commands:
     description: Give the path between two station
     usage: /trajet x y    x is the number of the departure station, y the number of the arrival station
     permission: polytcl.use
+permissions:
+  polytcl.use:
+    description: The write to use the PolyTCL extension
+    default: true
