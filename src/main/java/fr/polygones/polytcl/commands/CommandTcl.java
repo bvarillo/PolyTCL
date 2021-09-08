@@ -16,7 +16,7 @@ public class CommandTcl<T> implements CommandExecutor{
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
         if (map == null){
-            sender.sendMessage("The PolyTcl extension was not loaded correctly, this command is not activated");
+            sender.sendMessage("The PolyTCL extension was not loaded correctly, this command is not activated");
             return true;
         }
         if (args.length < 2){
