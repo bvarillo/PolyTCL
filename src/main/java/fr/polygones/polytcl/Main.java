@@ -13,7 +13,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.polygones.polytcl.commands.CommandHelloPoly;
-import fr.polygones.polytcl.commands.CommandPath;
+import fr.polygones.polytcl.commands.CommandTcl;
 import fr.polygones.polytcl.utils.CsvParser;
 
 
@@ -46,10 +46,11 @@ public class Main extends JavaPlugin
             getLogger().severe("Pb reading map in file : " + mapPath);
         }
         if(map.length != map[0].length){
-            getLogger().severe("The given map is not a valid (square) map !\nThe path command will not be enabled.");
+            getLogger().severe("The given map is not a valid (square) map !\nThe /tcl command will not be enabled.");
+            getCommand("tcl").setExecutor(new CommandTcl(null));
         } else {
             getLogger().info("Map loaded with " + map.length + " stations");
-            getCommand("path").setExecutor(new CommandPath(map));
+            getCommand("tcl").setExecutor(new CommandTcl(map));
         }
 
         
