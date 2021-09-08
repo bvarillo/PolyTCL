@@ -42,15 +42,17 @@ public class Main extends JavaPlugin
         try {
             map = CsvParser.parseIntergerMatrix(mapPath, config.getString("separator"));
             getLogger().fine(Arrays.deepToString(map));
+
+            if(map.length != map[0].length){
+                getLogger().severe("The given map is not a valid (square) map !\nThe /tcl command will not be enabled.");
+                getCommand("tcl").setExecutor(new CommandTcl(null));
+            } else {
+                getLogger().info("Map loaded with " + map.length + " stations");
+                getCommand("tcl").setExecutor(new CommandTcl(map));
+            }
         } catch (IOException e){
             getLogger().severe("Pb reading map in file : " + mapPath);
-        }
-        if(map.length != map[0].length){
-            getLogger().severe("The given map is not a valid (square) map !\nThe /tcl command will not be enabled.");
             getCommand("tcl").setExecutor(new CommandTcl(null));
-        } else {
-            getLogger().info("Map loaded with " + map.length + " stations");
-            getCommand("tcl").setExecutor(new CommandTcl(map));
         }
 
         
