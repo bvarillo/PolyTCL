@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class CsvParser {
@@ -48,5 +50,14 @@ public class CsvParser {
         }
 
         return matrix;
+    }
+
+    public static Map<String,Integer>  parseStringIntegerMap(String file)throws IOException{
+        List<String[]> rowListe = parse(file ,"\t");
+        Map<String,Integer> map = new HashMap<String,Integer>();
+        for(String[] row : rowListe){
+            map.put(row[0], Integer.valueOf(row[1]));
+        }
+        return map;
     }
 }

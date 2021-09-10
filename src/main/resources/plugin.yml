@@ -6,14 +6,14 @@ dependencies:
 api-version: 1.17
 commands:
   helloPoly:
-    description: Say hello to polygones
+    description: Say hello to polygones.
     usage: /helloPoly
     permission: polytcl.use
   tcl:
-    description: Give the path between two station
-    usage: /tcl x y    x is the number of the departure station, y the number of the arrival station
+    description: Give the path between two station.
+    usage: /tcl x y    x is the departure station, y the arrival station.
     permission: polytcl.use
 permissions:
   polytcl.use:
-    description: The write to use the PolyTCL extension
+    description: The write to use the PolyTCL extension.
     default: true

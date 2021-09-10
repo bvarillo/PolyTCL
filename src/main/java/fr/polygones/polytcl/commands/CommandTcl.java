@@ -1,5 +1,7 @@
 package fr.polygones.polytcl.commands;
 
+import java.util.Map;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,9 +10,11 @@ import org.bukkit.command.CommandSender;
 public class CommandTcl<T> implements CommandExecutor{
 
     private T[][] map;
+    private Map<String,Integer> names;
 
-    public CommandTcl(T[][] m){
+    public CommandTcl(T[][] m, Map<String,Integer> n){
         map = m;
+        names = n;
     }
 
     @Override
@@ -26,14 +30,23 @@ public class CommandTcl<T> implements CommandExecutor{
         try {
             int x = Integer.parseInt(args[0])-1;
             int y = Integer.parseInt(args[1])-1;
-            // System.out.println("x :" + x + ", y :" + y);
             sender.sendMessage(map[x][y].toString());
         } catch (ArrayIndexOutOfBoundsException e) {
             sender.sendMessage(args[0] + " or " + args[1] + " is not a valid station number ! Please use numbers between " + 1 + " and " + map.length);
             return false;
         } catch (NumberFormatException e){
-            sender.sendMessage(args[0] + " or " + args[1] + " is not a valid number !");
-            return false;
+            if(names == null){
+                sender.sendMessage("Using stations names is not enable, please use nembers !");
+                return false;
+            }
+            try{
+                int x = names.get(args[0])-1;
+                int y = names.get(args[1])-1;
+                sender.sendMessage(map[x][y].toString());
+            }catch(NullPointerException ex){
+                sender.sendMessage(args[0] + " or " + args[1] + " is not a valid station name !");
+                return false;
+            }
         }
         return true;
     }

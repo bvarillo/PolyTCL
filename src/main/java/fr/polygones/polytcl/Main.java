@@ -1,13 +1,9 @@
 package fr.polygones.polytcl;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-
-import javax.print.event.PrintEvent;
+import java.util.Map;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,12 +17,14 @@ import fr.polygones.polytcl.utils.CsvParser;
 public class Main extends JavaPlugin
 {
     private FileConfiguration config = getConfig();
+    private String path = getDataFolder().toPath() + File.separator;
 
     @Override
     public void onEnable(){
         
         config.addDefault("mapFile","map.csv");
         config.addDefault("separator", ",");
+        config.addDefault("namesFile","names.csv");
         config.options().copyDefaults(true);
         saveConfig();
 
@@ -38,23 +36,32 @@ public class Main extends JavaPlugin
         getLogger().fine("separator : "+config.getString("separator"));
 
         Integer[][] map = null;
-        String mapPath = getDataFolder().toPath() + File.separator + config.getString("mapFile");
+        String mapPath = path + config.getString("mapFile");
         try {
             map = CsvParser.parseIntergerMatrix(mapPath, config.getString("separator"));
             getLogger().fine(Arrays.deepToString(map));
 
             if(map.length != map[0].length){
                 getLogger().severe("The given map is not a valid (square) map !\nThe /tcl command will not be enabled.");
-                getCommand("tcl").setExecutor(new CommandTcl(null));
+                map = null;
             } else {
                 getLogger().info("Map loaded with " + map.length + " stations");
-                getCommand("tcl").setExecutor(new CommandTcl(map));
             }
         } catch (IOException e){
             getLogger().severe("Pb reading map in file : " + mapPath);
-            getCommand("tcl").setExecutor(new CommandTcl(null));
+            map = null;
         }
 
+
+        String namesPath = path + config.getString("namesFile");
+
+        Map<String, Integer> names=null;
+        try {
+            names = CsvParser.parseStringIntegerMap(namesPath);
+        } catch (IOException e) {
+            getLogger().severe("Pb reading names' file, using station' names will not be possible");
+        }
+        getCommand("tcl").setExecutor(new CommandTcl(map, names));
         
     }
 
