@@ -12,61 +12,57 @@ import fr.polygones.polytcl.commands.CommandHelloPoly;
 import fr.polygones.polytcl.commands.CommandTcl;
 import fr.polygones.polytcl.utils.CsvParser;
 
-
-
-public class Main extends JavaPlugin
-{
+public class Main extends JavaPlugin {
     private FileConfiguration config = getConfig();
     private String path = getDataFolder().toPath() + File.separator;
 
     @Override
-    public void onEnable(){
-        
-        config.addDefault("mapFile","map.csv");
+    public void onEnable() {
+
+        config.addDefault("mapFile", "map.csv");
         config.addDefault("separator", ",");
-        config.addDefault("namesFile","names.csv");
+        config.addDefault("namesSeparator", "\t");
+        config.addDefault("namesFile", "names.csv");
         config.options().copyDefaults(true);
         saveConfig();
 
-
         getCommand("helloPoly").setExecutor(new CommandHelloPoly());
 
+        getLogger().fine("mapFile : " + config.getString("mapFile"));
+        getLogger().fine("separator : " + config.getString("separator"));
 
-        getLogger().fine("mapFile : "+config.getString("mapFile"));
-        getLogger().fine("separator : "+config.getString("separator"));
-
-        Integer[][] map = null;
+        String[][] map = null;
         String mapPath = path + config.getString("mapFile");
         try {
-            map = CsvParser.parseIntergerMatrix(mapPath, config.getString("separator"));
+            map = CsvParser.parseStringMatrix(mapPath, config.getString("separator"));
             getLogger().fine(Arrays.deepToString(map));
 
-            if(map.length != map[0].length){
-                getLogger().severe("The given map is not a valid (square) map !\nThe /tcl command will not be enabled.");
+            if (map.length != map[0].length) {
+                getLogger()
+                        .severe("The given map is not a valid (square) map !\nThe /tcl command will not be enabled.");
                 map = null;
             } else {
                 getLogger().info("Map loaded with " + map.length + " stations");
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             getLogger().severe("Pb reading map in file : " + mapPath);
             map = null;
         }
 
-
         String namesPath = path + config.getString("namesFile");
 
-        Map<String, Integer> names=null;
+        Map<String, Integer> names = null;
         try {
-            names = CsvParser.parseStringIntegerMap(namesPath);
-        } catch (IOException e) {
+            names = CsvParser.parseStringIntegerMap(namesPath, config.getString("namesSeparator"));
+        } catch (Exception e) {
             getLogger().severe("Pb reading names' file, using station' names will not be possible");
         }
         getCommand("tcl").setExecutor(new CommandTcl(map, names));
-        
+
     }
 
     @Override
-    public void onDisable(){
+    public void onDisable() {
         System.out.println("Goodbye from fr.polygones.polytcl");
     }
 }

@@ -8,7 +8,9 @@ Minecraft plugin that compute path in a railway network.
 
 ```yml
  mapName: #Name of the csv file describing the network, default : map.csv
- separator: #the separator used in the csv file, default : ,
+ separator: #the separator used in the csv map file, default : ,
+ namesSeparator: #The separator used in the csv names filr, default : \t
+ namesFile: #Name of the csv file containing the names of the stations
 ```
 
 ## Devloppement
