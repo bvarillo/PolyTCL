@@ -41,8 +41,8 @@ public class CommandTcl<T> implements CommandExecutor {
                 return false;
             }
             try {
-                int x = names.get(args[0]) - 1;
-                int y = names.get(args[1]) - 1;
+                int x = names.get(args[0].toLowerCase()) - 1;
+                int y = names.get(args[1].toLowerCase()) - 1;
                 sender.sendMessage(map[x][y].toString());
             } catch (NullPointerException ex) {
                 sender.sendMessage(args[0] + " or " + args[1] + " is not a valid station name !");

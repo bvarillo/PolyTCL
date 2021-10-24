@@ -55,7 +55,7 @@ public class CsvParser {
         List<String[]> rowListe = parse(file, sep);
         Map<String, Integer> map = new HashMap<String, Integer>();
         for (String[] row : rowListe) {
-            map.put(row[0], Integer.valueOf(row[1]));
+            map.put(row[0].toLowerCase(), Integer.valueOf(row[1]));
         }
         return map;
     }
