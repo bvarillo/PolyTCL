@@ -28,7 +28,7 @@ jobs:
             
       - name: "Build & test"
         run: |
-          pwd
+          ls
           mvn package
 
       - uses: "marvinpinto/action-automatic-releases@latest"
