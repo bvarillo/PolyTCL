@@ -46,7 +46,11 @@ jobs:
       #     files: |
       #       LICENSE.txt
       #       *.jar
-      - uses: AButler/upload-release-assets@v2.0
+      # - uses: AButler/upload-release-assets@v2.0
+      #   with:
+      #     files: '*.jar'
+      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          files: '*.jar'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          files: *.jar
