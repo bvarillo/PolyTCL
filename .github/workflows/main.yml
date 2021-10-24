@@ -35,8 +35,8 @@ jobs:
             
       - name: "Build & test"
         run: |
-          ls
           mvn package
+          mv ./target/*-jar-with-dependencies.jar polytcl.jar
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
