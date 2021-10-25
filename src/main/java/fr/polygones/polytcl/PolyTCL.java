@@ -12,7 +12,7 @@ import fr.polygones.polytcl.commands.CommandHelloPoly;
 import fr.polygones.polytcl.commands.CommandTcl;
 import fr.polygones.polytcl.utils.CsvParser;
 
-public class Main extends JavaPlugin {
+public class PolyTCL extends JavaPlugin {
     private FileConfiguration config = getConfig();
     private String path = getDataFolder().toPath() + File.separator;
 
