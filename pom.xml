@@ -6,6 +6,7 @@
   <groupId>fr.polygones</groupId>
   <artifactId>polytcl</artifactId>
   <version>0.1.1</version>
+  <packaging>jar</packaging>
 
   <name>PolyTCL</name>
   <!-- FIXME change it to the project's website -->
@@ -42,8 +43,11 @@
   </dependencies>
 
   <build>
+
     <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+
     <plugins>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -62,6 +66,9 @@
           </execution>
         </executions>
       </plugin>
+
   </plugins>
+
   </build>
+
 </project>
